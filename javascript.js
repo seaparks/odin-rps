@@ -1,10 +1,7 @@
 console.log("Hello, world!");
 
-let humanScore    = 0;
-let computerScore = 0;
-
-const humanSelection    = getHumanChoice();
-const computerSelection = getComputerChoice();
+let humanScore;
+let computerScore;
 
 const winners = {
     rock: "scissors",
@@ -12,7 +9,28 @@ const winners = {
     paper: "rock"
 };
 
-playRound( humanSelection, computerSelection );
+playGame();
+
+function playGame(){
+    console.log("Let's play five rounds of Rock-Paper-Scissors!")
+
+    // in case it gets called again
+    humanScore    = 0;
+    computerScore = 0;
+
+    let games = 0;
+    while( games < 5 ) {
+
+        const humanSelection    = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        playRound( humanSelection, computerSelection );
+        games++;
+    }
+
+    console.log( `Final score: Human ${humanScore}, Computer ${computerScore}`);
+
+}
+
 
 function playRound( humanChoice, computerChoice ){
 
