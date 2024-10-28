@@ -1,7 +1,5 @@
-console.log("Hello, world!");
-
-let humanScore;
-let computerScore;
+let humanScore = 0;
+let computerScore = 0;
 
 const winners = {
     rock: "scissors",
@@ -9,42 +7,53 @@ const winners = {
     paper: "rock"
 };
 
-playGame();
+const buttons   = document.querySelectorAll('button');
+const resultdiv = document.querySelector('#result');
+const scorediv  = document.querySelector('#score');
 
-function playGame(){
-    console.log("Let's play five rounds of Rock-Paper-Scissors!")
+buttons.forEach( button => {
+    button.addEventListener('click', function(){
+        playRound(button.value)
+    });
+});
 
-    // in case it gets called again
-    humanScore    = 0;
-    computerScore = 0;
+function playRound( humanChoice ){
 
-    let games = 0;
-    while( games < 5 ) {
-
-        const humanSelection    = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound( humanSelection, computerSelection );
-        games++;
-    }
-
-    console.log( `Final score: Human ${humanScore}, Computer ${computerScore}`);
-
-}
-
-
-function playRound( humanChoice, computerChoice ){
+    const computerChoice = getComputerChoice();
 
     if ( humanChoice == computerChoice ){
-        console.log( "Both chose: " + humanChoice );
+        updateResult(`Both chose: ${humanChoice}`);
+
     } else if ( winners[humanChoice] == computerChoice ){
-        console.log( `Human wins! They chose ${humanChoice} and computer chose ${computerChoice}` );
         humanScore++;
+        updateResult(`Human wins! They chose ${humanChoice} and computer chose ${computerChoice}`);
+        checkIfOver();
     } else {
-        console.log( `Computer wins! They chose ${computerChoice} and human chose ${humanChoice}`);
         computerScore++;
+        updateResult(`Computer wins! They chose ${computerChoice} and human chose ${humanChoice}`);
+        checkIfOver();
     }
 }
 
+function updateResult(result){
+    const resultspan = document.createElement('span');
+    resultspan.textContent = result;
+    resultdiv.innerHTML = '';
+    resultdiv.appendChild(resultspan);
+
+    const scorespan = document.createElement('span');
+    scorespan.textContent = `Current score: Human ${humanScore}, Computer ${computerScore}`;
+    scorediv.innerHTML = '';
+    scorediv.appendChild(scorespan);
+}
+
+function checkIfOver() {
+    if (humanScore == 5){
+        
+    } else if (computerScore == 5){
+
+    }
+}
 
 function getComputerChoice() {
     let num = Math.floor( Math.random() * 3 );
@@ -55,13 +64,4 @@ function getComputerChoice() {
     } else {
         return "scissors";
     }
-}
-
-function getHumanChoice() {
-    const validOptions = ["rock", "paper", "scissors"];
-    let human = prompt("Please type 'rock', 'paper', or 'scissors'");
-    while ( !validOptions.includes(human) ){
-        human = prompt("Invalid choice. Please type 'rock', 'paper', or 'scissors'")
-    }
-    return human;
 }
