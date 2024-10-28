@@ -17,6 +17,7 @@ buttons.forEach( button => {
     });
 });
 
+
 function playRound( humanChoice ){
 
     const computerChoice = getComputerChoice();
@@ -36,22 +37,38 @@ function playRound( humanChoice ){
 }
 
 function updateResult(result){
+    resultdiv.innerHTML = '';
+    scorediv.innerHTML = '';
+
     const resultspan = document.createElement('span');
     resultspan.textContent = result;
-    resultdiv.innerHTML = '';
     resultdiv.appendChild(resultspan);
 
     const scorespan = document.createElement('span');
     scorespan.textContent = `Current score: Human ${humanScore}, Computer ${computerScore}`;
-    scorediv.innerHTML = '';
     scorediv.appendChild(scorespan);
 }
 
 function checkIfOver() {
     if (humanScore == 5){
-        
-    } else if (computerScore == 5){
+        disableButtons();
 
+        resultdiv.innerHTML = '';
+        scorediv.innerHTML = '';
+
+        const resultspan = document.createElement('span');
+        resultspan.textContent = `HUMAN WINS! Final score: Human ${humanScore}, Computer ${computerScore}!`;
+        resultdiv.appendChild(resultspan); 
+
+    } else if (computerScore == 5){
+        disableButtons();
+
+        resultdiv.innerHTML = '';
+        scorediv.innerHTML = '';
+
+        const resultspan = document.createElement('span');
+        resultspan.textContent = `COMPUTER WINS! Final score: Human ${humanScore}, Computer ${computerScore}!`;
+        resultdiv.appendChild(resultspan); 
     }
 }
 
@@ -64,4 +81,10 @@ function getComputerChoice() {
     } else {
         return "scissors";
     }
+}
+
+function disableButtons(){
+    buttons.forEach( button => {
+        button.disabled = true;
+    });
 }
